@@ -1,4 +1,4 @@
-import argparse
+import argparse 
 import csv
 import re
 from urllib.request import urlretrieve
@@ -41,7 +41,7 @@ def process_file(filename):
                 
                 # Part VI - Hits per hour
                 try:
-                    dt = datetime.strptime(row[1], '%m/%d/%Y %H:%M:%S')
+                    dt = datetime.strptime(row[1], '%Y-%m-%d %H:%M:%S')  # Updated format
                     hour_hits[dt.hour] += 1
                 except ValueError as e:
                     print(f"Error parsing date: {e}")
@@ -65,8 +65,7 @@ def get_browser(user_agent):
 
 def main():
     parser = argparse.ArgumentParser(description='Web Log Analysis')
-    parser.add_argument('url', nargs='?', default='http://s3.amazonaws.com/cuny-is211-spring2015/weblog.csv',
-                        help='URL of the web log file')
+    parser.add_argument('--url', required=True, help='URL of the web log file')  # Explicit --url parameter
     args = parser.parse_args()
 
     # Part I - Download the file
